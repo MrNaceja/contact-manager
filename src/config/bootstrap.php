@@ -1,18 +1,21 @@
 <?php
 
 require_once "vendor/autoload.php";
+require_once __DIR__.'../../utils/functions.php';
 
+use App\Utils\Enum\EnumTypeContact;
 use Doctrine\DBAL\DriverManager;
+use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
 
 //Carregando as variaveis de ambiente no projeto.
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+$oDotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$oDotenv->load();
 
 //Inicializando o ORM
 $oConfig = ORMSetup::createAttributeMetadataConfiguration(
-    paths: [__DIR__ . '/../../src'],
+    paths: [__DIR__ . '/../../src/model'],
     isDevMode: true,
 );
 
@@ -24,6 +27,9 @@ $oConnection = DriverManager::getConnection([
     'password' => $_ENV['DB_PASS'],
     'dbname'   => $_ENV['DB_NAME'],
 ], $oConfig);
+
+//Definindo os tipos personalizados de enum no banco de dados
+Type::addType('typeContact', EnumTypeContact::class);
 
 //Instância do Gerenciador ORM
 $entityManager = new EntityManager($oConnection, $oConfig);
