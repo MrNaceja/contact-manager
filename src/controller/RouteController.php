@@ -8,6 +8,7 @@ use Closure;
 abstract class RouteController {
 
     private static $routes;
+    private static $Request;
     
     public static function get(string $endpointAction, string|Closure $handler, string $method = 'index') {
         $handler = is_string($handler) ? [$handler, $method] : $handler;
@@ -29,11 +30,33 @@ abstract class RouteController {
         }
     }
 
+    public static function isRoute(string $route) {
+        $Request = self::getRequest();
+        // Remove a barra inicial, se houver
+        $currentUrl = ltrim($Request->getEndpointUrl(), '/');
+        // Divide a URL atual em segmentos
+        $urlSegments = explode('/', $currentUrl);
+        
+        // Divide a rota em segmentos
+        $routeSegments = explode('/', trim($route, '/'));
+        
+        // Verifica se os primeiros segmentos da URL correspondem à rota
+        return count(array_intersect($urlSegments, $routeSegments)) === count($routeSegments);
+    }
+    
+
+    private static function getRequest() {
+        if (!isset(Self::$Request)) {
+            self::$Request = new RequestController();
+        }
+        return self::$Request;
+    }
+
     public static function listen() {
-        $Request          = new RequestController();
+        $Request          = self::getRequest();
         $actionEndpoint   = $Request->getEndpointUrl();
         $routesMethodHttp = self::$routes->offsetGet($Request->getMethodHttp());
-        if ($routesMethodHttp->offsetExists($Request->getEndpointUrl())) {
+        if ($routesMethodHttp->offsetExists($actionEndpoint)) {
             $routeHandler = $routesMethodHttp->offsetGet($actionEndpoint);
             if (is_array($routeHandler)) {
                 list ($controller, $method) = $routeHandler;

@@ -7,7 +7,7 @@ use App\Controller\PageController;
 class ContactController extends PageController {
 
     public function index() {
-        return $this->View->render('contact');
+        echo $this->View->render('ContactsView', ['title' => 'Contact Manager | Contatos']);
     }
 
 }

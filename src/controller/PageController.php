@@ -11,5 +11,5 @@ abstract class PageController {
     public function __construct() {
         $this->View = new Engine(__DIR__.'../../view', 'php');
     }
-
+    
 }

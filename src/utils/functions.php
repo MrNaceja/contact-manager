@@ -13,3 +13,11 @@ function varlog(mixed $log) {
     }
     echo $log;
 }
+
+function parseUrlRoute(string $route) {
+    return $_ENV['APP_URL_BASE']. DIRECTORY_SEPARATOR. ltrim($route, '/');
+}
+
+function isEmpty($value) {
+    return empty($value) || is_null($value) || $value === '' || $value === false;
+}
