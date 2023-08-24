@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Controller\PageController;
+use App\Model\Person;
+use Exception;
 
 class PersonController extends PageController{
 
@@ -21,6 +23,14 @@ class PersonController extends PageController{
             'title' => 'Contact Manager | Pessoas',
             'persons' => $persons
         ]);
+    }
+
+    public function create() {
+        $personData = getSendedData();
+        $person     = (new Person())->setName($personData['name'])->setCpf($personData['cpf']);
+        // $person->create();
+        echo json_encode([ 'status' => 200, 'message' => 'Pessoa criada com sucesso!', 'data' => $person->asJson() ]);
+        exit();
     }
 
 }

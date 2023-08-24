@@ -17,13 +17,13 @@ const BG_INACTIVE = "text-gray-300 hover:bg-zinc-700 hover:text-white";
                 <div class="md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
                         <a href="<?= parseUrlRoute('/') ?>"         
-                           class="<?= RouteController::isRoute('/') ? BG_ACTIVE : BG_INACTIVE ?> rounded-md px-3 py-2 text-sm font-medium"
+                           class="<?= isRoute('/') ? BG_ACTIVE : BG_INACTIVE ?> rounded-md px-3 py-2 text-sm font-medium"
                         >Boas vindas</a>
                         <a href="<?= parseUrlRoute('/pessoas') ?>"  
-                           class="<?= RouteController::isRoute('/pessoas') ? BG_ACTIVE : BG_INACTIVE ?> rounded-md px-3 py-2 text-sm font-medium"
+                           class="<?= isRoute('/pessoas') ? BG_ACTIVE : BG_INACTIVE ?> rounded-md px-3 py-2 text-sm font-medium"
                         >Pessoas</a>
                         <a href="<?= parseUrlRoute('/contatos') ?>" 
-                           class="<?= RouteController::isRoute('/contatos') ? BG_ACTIVE : BG_INACTIVE ?> rounded-md px-3 py-2 text-sm font-medium"
+                           class="<?= isRoute('/contatos') ? BG_ACTIVE : BG_INACTIVE ?> rounded-md px-3 py-2 text-sm font-medium"
                         >Contatos</a>
                     </div>
                 </div>

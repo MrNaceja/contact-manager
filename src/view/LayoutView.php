@@ -12,9 +12,11 @@
         <title><?= $title ?></title>
     </head>
     <body class="font-app antialised overflow-hidden">
-        <?php $this->insert('components/header') ?>
+        <?= $this->insert('components/header') ?>
         <section class="h-full mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
             <?= $this->section('content') ?>
         </section>
+        <?= $this->section('scripts') ?>
+        <script src="src/view/scripts/Message.js"></script>
     </body>
 </html>

@@ -1,1 +1,1 @@
-<?php $this->layout('LayoutView', ['title' => $title]) ?>
+<?= $this->layout('LayoutView', ['title' => $title]) ?>
