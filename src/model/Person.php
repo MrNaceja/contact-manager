@@ -29,11 +29,28 @@ class Person extends Model {
         return $this;
     }
 
+    public function getName() : string {
+        return $this->name;
+    }
+
+    public function getCpf() : string {
+        return $this->cpf;
+    }
+
+    public function getId() : int|null {
+        return $this->id;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
+        return $this;
+    }
+
     public function asJson() : array {
         return [
-            'id'   => $this->id,
-            'name' => $this->name,
-            'cpf'  => $this->cpf
+            'id'   => $this->getId(),
+            'name' => $this->getName(),
+            'cpf'  => $this->getCpf()
         ];
     }
     

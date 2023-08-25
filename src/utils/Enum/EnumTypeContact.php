@@ -2,7 +2,7 @@
 
 namespace App\Utils\Enum;
 
-class EnumTypeContact extends Enumerator {
+class EnumTypeContact extends EnumeratorType {
 
     const TYPE_TESTE = 'teste';
 

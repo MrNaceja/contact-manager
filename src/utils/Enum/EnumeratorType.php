@@ -5,7 +5,7 @@ namespace App\Utils\Enum;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 
-abstract class Enumerator extends Type {
+abstract class EnumeratorType extends Type {
 
     /**
      * Retornar os valores do enumerado.
