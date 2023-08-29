@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as Orm;
 
 #[Orm\Entity]
@@ -18,6 +20,13 @@ class Person extends Model {
 
     #[Orm\Column(type: 'string', length:14)]
     private string $cpf;
+
+    #[Orm\OneToMany(targetEntity: Contact::class, mappedBy: 'person')]
+    private Collection $contacts;
+
+    function __construct() {
+        $this->contacts = new ArrayCollection();
+    }
 
     public function setName(string $name) {
         $this->name = $name;
@@ -46,12 +55,8 @@ class Person extends Model {
         return $this;
     }
 
-    public function asJson() : array {
-        return [
-            'id'   => $this->getId(),
-            'name' => $this->getName(),
-            'cpf'  => $this->getCpf()
-        ];
+    public function getContacts() {
+        return $this->contacts;
     }
     
 }

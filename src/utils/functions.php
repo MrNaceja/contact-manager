@@ -24,14 +24,13 @@ function parseUrlRoute(string $route) {
     return $_ENV['APP_URL_BASE']. DIRECTORY_SEPARATOR. ltrim($route, '/');
 }
 
+function toRoute(string $route) {
+    return (new Router())->getCurrentUri() . $route;
+}
+
 function isRoute(string $route) {
     $currentUrl    = (new Router())->getCurrentUri();
     $urlSegments   = explode('/', trim($currentUrl, '/'));
     $routeSegments = explode('/', trim($route     , '/'));
     return count(array_intersect($urlSegments, $routeSegments)) === count($routeSegments);
-}
-
-function getSendedData() {
-    $data = json_decode(file_get_contents('php://input'), true);
-    return array_merge($data, $_POST);
 }

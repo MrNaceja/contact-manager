@@ -33,3 +33,5 @@ Type::addType('typeContact', EnumTypeContact::class);
 
 //Instância do Gerenciador ORM
 $entityManager = new EntityManager($oConnection, $oConfig);
+
+session_start();

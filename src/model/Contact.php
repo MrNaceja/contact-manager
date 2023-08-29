@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as Orm;
 
 #[Orm\Entity]
 #[Orm\Table(name:'contacts')]
-class Contact {
+class Contact extends Model {
 
     #[Orm\Id]
     #[Orm\GeneratedValue]
@@ -18,5 +18,25 @@ class Contact {
 
     #[Orm\Column(type: 'string')]
     private string $description;
+
+    #[Orm\ManyToOne(targetEntity:Person::class, inversedBy:'contacts')]
+    #[Orm\JoinColumn(name: 'id_person', referencedColumnName:'id')]
+    private Person $Person;
+
+    public function getId() {
+        return $this->id;
+    }
+
+    public function getType() {
+        return $this->type;
+    }
+
+    public function getDescription() {
+        return $this->description;
+    }
+
+    public function getPerson() : Person {
+        return $this->Person;
+    }
 
 }
