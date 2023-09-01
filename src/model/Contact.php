@@ -39,4 +39,19 @@ class Contact extends Model {
         return $this->Person;
     }
 
+    public function setPerson(Person $person) {
+        $this->Person = $person;
+        return $this;
+    }
+
+    public function setType($type) {
+        $this->type = $type;
+        return $this;
+    }
+
+    public function setDescription($description) {
+        $this->description = $description;
+        return $this;
+    }
+
 }

@@ -19,7 +19,8 @@ $router->get('/pessoas/atualizacao/{id}', PersonController::class .'@formUpdate'
     $router->post('/pessoas/atualizacao/{id}', PersonController::class .'@update');
     $router->get('/pessoas/deletar/{id}'     , PersonController::class .'@delete');
 
-$router->get('/contatos', ContactController::class.'@index');
+$router->get('/contatos'         , ContactController::class.'@index');
+$router->get('/contatos/cadastro', ContactController::class.'@formCreate');
 
 
 $router->set404(function () {

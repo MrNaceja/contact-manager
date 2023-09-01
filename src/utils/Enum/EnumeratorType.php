@@ -12,7 +12,7 @@ abstract class EnumeratorType extends Type {
      * 
      * @return array
      */
-    protected abstract function values() : array;
+    protected static abstract function values() : array;
 
     /**
      * @inheritdoc

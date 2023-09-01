@@ -24,6 +24,7 @@ class PersonController extends PageController{
             'title' => 'Contact Manager | Cadastrar Pessoa'
         ]);
     }
+    
     public function formShow($id) {
         $person = (new Person())->findById($id);
         echo $this->View->render('PersonView', [
@@ -33,6 +34,7 @@ class PersonController extends PageController{
             'person'      => $person
         ]);
     }
+
     public function formUpdate($id) {
         $person = (new Person())->findById($id);
         echo $this->View->render('PersonView', [
@@ -43,23 +45,43 @@ class PersonController extends PageController{
         ]);
     }
 
+    private function loadContactsPersonFromGrid(Person $person, $isCreation = true) {
+        $gridContactsValues = $_POST['contacts'];
+        if (!$isCreation) {
+            $person->getContacts()->clear();
+        }
+        array_map(function ($type, $description) use ($person, $isCreation) {
+            if (isEmpty($type) && isEmpty($description)) {
+                return;
+            }
+            $person->newContact()->setType($type)->setDescription($description);
+        }, $gridContactsValues["type"], $gridContactsValues["description"]);
+        return $person;
+    }
+
     public function create() {
-        $person  = (new Person())->setName($_POST['name'])->setCpf($_POST['cpf']);
-        $person->create();
-        return $this->redirectWithSuccess('/pessoas', 'Cadastro de Pessoa', $person->getName() . ' foi cadastrado');
+        $person = (new Person())->setName($_POST['name'])->setCpf($_POST['cpf']);
+        $this->loadContactsPersonFromGrid($person);
+        if ($person->create()) {
+            return $this->redirectWithSuccess('/pessoas', 'Cadastro de Pessoa', $person->getName() . ' foi cadastrado');
+        }
+        return $this->redirectWithError('/pessoas', 'Cadastro de Pessoa', 'Problemas ao cadastrar pessoa');
     }
 
     public function update() {
         $person = (new Person())->findById($_POST['id']);
         $person->setName($_POST['name'])->setCpf($_POST['cpf']);
+        $this->loadContactsPersonFromGrid($person, false);
         $person->update();
         return $this->redirectWithSuccess('/pessoas', 'Atualização de Pessoa', $person->getName() . ' foi atualizado');
     }
 
     public function delete($id) {
         $person = (new Person())->findById($id);
-        $person->delete();
-        return $this->redirectWithSuccess('/pessoas', 'Exclusão de Pessoa', $person->getName() . ' foi excluido');
+        if ($person->delete()) {
+            return $this->redirectWithSuccess('/pessoas', 'Exclusão de Pessoa', $person->getName() . ' foi excluido');
+        }
+        return $this->redirectWithError('/pessoas', 'Exclusão de Pessoa', 'Problemas ao excluir pessoa');
     }
 
 }

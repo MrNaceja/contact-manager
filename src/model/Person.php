@@ -21,7 +21,7 @@ class Person extends Model {
     #[Orm\Column(type: 'string', length:14)]
     private string $cpf;
 
-    #[Orm\OneToMany(targetEntity: Contact::class, mappedBy: 'person')]
+    #[Orm\OneToMany(targetEntity: Contact::class, mappedBy: 'Person', cascade:['persist', 'remove'], orphanRemoval:true)]
     private Collection $contacts;
 
     function __construct() {
@@ -57,6 +57,12 @@ class Person extends Model {
 
     public function getContacts() {
         return $this->contacts;
+    }
+
+    public function newContact() {
+        $newContact = (new Contact())->setPerson($this);
+        $this->getContacts()->add($newContact);
+        return $newContact;
     }
     
 }
