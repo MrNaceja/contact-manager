@@ -1,7 +1,5 @@
 <?php
 
-use App\Controller\RouteController;
-
 const BG_ACTIVE   = "bg-gradient-to-br from-indigo-500 to-indigo-800 text-white";
 const BG_INACTIVE = "text-gray-300 hover:bg-zinc-700 hover:text-white";
 

@@ -13,7 +13,8 @@
         <title><?= $title ?></title>
     </head>
     <body class="font-app antialised overflow-hidden">
-        <?= $this->insert('components/header') ?>
+        <?php $noHeader = $noHeader ?? false ?>
+        <?= !$noHeader && $this->insert('components/header') ?>
             <section class="h-full mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
                 <?= $this->section('content') ?>
             </section>

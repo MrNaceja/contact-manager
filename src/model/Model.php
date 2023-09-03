@@ -6,6 +6,9 @@ use Throwable;
 
 abstract class Model {
     
+    /**
+     * Realiza a criação de um registro do modelo (INSERT).
+     */
     public function create() : bool {
         global $entityManager;
         try {
@@ -18,6 +21,9 @@ abstract class Model {
         }
     }
 
+    /**
+     * Realiza a exclusão de um registro do modelo (DELETE).
+     */
     public function delete() : bool {
         global $entityManager;
         try {
@@ -30,17 +36,28 @@ abstract class Model {
         }
     }
 
+    /**
+     * Realiza a busca de todos os registros de modelo (SELECT *).
+     */
     public function read() {
         global $entityManager;
-        $productRepository = $entityManager->getRepository($this::class);
-        return $productRepository->findAll();
+        $Repository = $entityManager->getRepository($this::class);
+        return $Repository->findAll();
     }
 
+    /**
+     * Realiza a busca de um registro de modelo para o ID fornecido (SELECT).
+     * 
+     * @param string $id
+     */
     public function findById(string $id) {
         global $entityManager;
         return $entityManager->find($this::class, $id);
     }
 
+    /**
+     * Realiza a atualização do registro de modelo (UPDATE).
+     */
     public function update() : bool {
         global $entityManager;
         try {

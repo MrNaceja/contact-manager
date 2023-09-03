@@ -9,14 +9,32 @@ use App\Utils\Enum\EnumActions;
 
 class PersonController extends PageController{
 
-    public function index() {
+    /**
+     * Visualização de pessoas cadastradas (Consulta de pessoas).
+     */
+    public function index($personNameSearch = null) {
         $persons = (new Person())->read();
+        if ($personNameSearch) {
+            $persons = array_filter($persons, function ($person) use($personNameSearch) {
+                return strpos(strtolower($person->getName()), strtolower($personNameSearch)) !== false;
+            });
+        }
         echo $this->View->render('PersonsView', [
             'title'   => 'Contact Manager | Pessoas',
             'persons' => $persons
         ]);
     }
 
+    /**
+     * Visualização de pessoas conforme busca pelo nome.
+     */
+    public function search ($personName) {
+        return $this->index($personName);
+    }
+
+    /**
+     * Visualização do Formulário de cadastro de pessoa.
+     */
     public function formCreate() {
         echo $this->View->render('PersonView', [
             'action' => EnumActions::ACTION_CREATE,
@@ -25,6 +43,11 @@ class PersonController extends PageController{
         ]);
     }
     
+    /**
+     * Visualização do Formulário de visualização (detalhes) de pessoa.
+     * 
+     * @param int $id ID da Pessoa
+     */
     public function formShow($id) {
         $person = (new Person())->findById($id);
         echo $this->View->render('PersonView', [
@@ -35,6 +58,11 @@ class PersonController extends PageController{
         ]);
     }
 
+    /**
+     * Visualização do Formulário de atualização de pessoa.
+     * 
+     * @param int $id ID da Pessoa
+     */
     public function formUpdate($id) {
         $person = (new Person())->findById($id);
         echo $this->View->render('PersonView', [
@@ -45,6 +73,12 @@ class PersonController extends PageController{
         ]);
     }
 
+    /**
+     * Carrega o grid contatos na pessoa.
+     * 
+     * @param Person $person Pessoa para carregar os contatos
+     * @param bool $isCreation Indica se é criação, do contrário é alteração
+     */
     private function loadContactsPersonFromGrid(Person $person, $isCreation = true) {
         $gridContactsValues = $_POST['contacts'];
         if (!$isCreation) {
@@ -58,7 +92,9 @@ class PersonController extends PageController{
         }, $gridContactsValues["type"], $gridContactsValues["description"]);
         return $person;
     }
-
+    /**
+     * Realiza o cadastro de uma pessoa.
+     */
     public function create() {
         $person = (new Person())->setName($_POST['name'])->setCpf($_POST['cpf']);
         $this->loadContactsPersonFromGrid($person);
@@ -67,7 +103,9 @@ class PersonController extends PageController{
         }
         return $this->redirectWithError('/pessoas', 'Cadastro de Pessoa', 'Problemas ao cadastrar pessoa');
     }
-
+    /**
+     * Realiza a atualização de uma pessoa.
+     */
     public function update() {
         $person = (new Person())->findById($_POST['id']);
         $person->setName($_POST['name'])->setCpf($_POST['cpf']);
@@ -75,7 +113,11 @@ class PersonController extends PageController{
         $person->update();
         return $this->redirectWithSuccess('/pessoas', 'Atualização de Pessoa', $person->getName() . ' foi atualizado(a)');
     }
-
+    /**
+     * Realiza a exclusão de uma pessoa.
+     * 
+     * @param int $id
+     */
     public function delete($id) {
         $person = (new Person())->findById($id);
         if ($person->delete()) {
