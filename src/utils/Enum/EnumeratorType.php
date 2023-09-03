@@ -14,6 +14,8 @@ abstract class EnumeratorType extends Type {
      */
     protected static abstract function values() : array;
 
+    protected static abstract function valueToDescription($value);
+
     /**
      * @inheritdoc
      */

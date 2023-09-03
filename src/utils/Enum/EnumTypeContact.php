@@ -14,4 +14,15 @@ class EnumTypeContact extends EnumeratorType {
         ];
     }
 
+
+    public static function valueToDescription($value) {
+        $description = false;
+        foreach (self::values() as $typeDescription =>  $type) {
+            if ($type == $value) {
+                $description = $typeDescription;
+            }
+        }
+        return $description;
+    }
+
 }

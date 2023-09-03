@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\Utils\Enum\EnumTypeContact;
 use Doctrine\ORM\Mapping as Orm;
 
 #[Orm\Entity]
@@ -27,8 +28,8 @@ class Contact extends Model {
         return $this->id;
     }
 
-    public function getType() {
-        return $this->type;
+    public function getType(bool $bAsDescription = false) {
+        return $bAsDescription ? EnumTypeContact::valueToDescription($this->type) : $this->type;
     }
 
     public function getDescription() {

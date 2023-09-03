@@ -50,8 +50,8 @@ class PersonController extends PageController{
         if (!$isCreation) {
             $person->getContacts()->clear();
         }
-        array_map(function ($type, $description) use ($person, $isCreation) {
-            if (isEmpty($type) && isEmpty($description)) {
+        array_map(function ($type, $description) use ($person) {
+            if (isEmpty($description)) {
                 return;
             }
             $person->newContact()->setType($type)->setDescription($description);
@@ -63,7 +63,7 @@ class PersonController extends PageController{
         $person = (new Person())->setName($_POST['name'])->setCpf($_POST['cpf']);
         $this->loadContactsPersonFromGrid($person);
         if ($person->create()) {
-            return $this->redirectWithSuccess('/pessoas', 'Cadastro de Pessoa', $person->getName() . ' foi cadastrado');
+            return $this->redirectWithSuccess('/pessoas', 'Cadastro de Pessoa', $person->getName() . ' foi cadastrado(a)');
         }
         return $this->redirectWithError('/pessoas', 'Cadastro de Pessoa', 'Problemas ao cadastrar pessoa');
     }
@@ -73,13 +73,13 @@ class PersonController extends PageController{
         $person->setName($_POST['name'])->setCpf($_POST['cpf']);
         $this->loadContactsPersonFromGrid($person, false);
         $person->update();
-        return $this->redirectWithSuccess('/pessoas', 'Atualização de Pessoa', $person->getName() . ' foi atualizado');
+        return $this->redirectWithSuccess('/pessoas', 'Atualização de Pessoa', $person->getName() . ' foi atualizado(a)');
     }
 
     public function delete($id) {
         $person = (new Person())->findById($id);
         if ($person->delete()) {
-            return $this->redirectWithSuccess('/pessoas', 'Exclusão de Pessoa', $person->getName() . ' foi excluido');
+            return $this->redirectWithSuccess('/pessoas', 'Exclusão de Pessoa', $person->getName() . ' foi excluido(a)');
         }
         return $this->redirectWithError('/pessoas', 'Exclusão de Pessoa', 'Problemas ao excluir pessoa');
     }

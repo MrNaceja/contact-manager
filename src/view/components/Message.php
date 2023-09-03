@@ -10,7 +10,11 @@ $content = $_SESSION['message']['content'];
 
 ?>
 <script>
-    swal('<?= $title ?>', '<?= $content ?>', '<?= $type ?>');
+    swal('<?= $title ?>', '<?= $content ?>', '<?= $type ?>', {
+        button: {
+            className: 'bg-gradient-to-br from-indigo-500 to-indigo-800'
+        }
+    });
 </script>
 
 <?php unset($_SESSION['message']); ?>

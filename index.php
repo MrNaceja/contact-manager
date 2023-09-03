@@ -19,8 +19,13 @@ $router->get('/pessoas/atualizacao/{id}', PersonController::class .'@formUpdate'
     $router->post('/pessoas/atualizacao/{id}', PersonController::class .'@update');
     $router->get('/pessoas/deletar/{id}'     , PersonController::class .'@delete');
 
-$router->get('/contatos'         , ContactController::class.'@index');
-$router->get('/contatos/cadastro', ContactController::class.'@formCreate');
+$router->get('/contatos'                 , ContactController::class .'@index');
+$router->get('/contatos/cadastro'        , ContactController::class .'@formCreate');
+$router->get('/contatos/detalhes/{id}'   , ContactController::class .'@formShow');
+$router->get('/contatos/atualizacao/{id}', ContactController::class .'@formUpdate');
+    $router->post('/contatos/cadastro'        , ContactController::class .'@create');
+    $router->post('/contatos/atualizacao/{id}', ContactController::class .'@update');
+    $router->get('/contatos/deletar/{id}'     , ContactController::class .'@delete');
 
 
 $router->set404(function () {

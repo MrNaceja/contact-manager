@@ -15,9 +15,6 @@ const removeContactLineGrid = (lineDOM) => {
     grid.removeChild(lineDOM)
 }
 
-const CONTACT_TYPE_TELEFONE = 1
-const CONTACT_TYPE_EMAIL = 2;
-
 const addListenersOnContactGridLine = (...lines) => {
     lines.map(lineDOM => {
         lineDOM.querySelector('[role="add_contact"]').addEventListener('click', addContactLineGrid)
@@ -40,32 +37,6 @@ const addListenersOnContactGridLine = (...lines) => {
             }
         })
     })
-}
-
-const maskCpf = (event) => {
-    const inputDOM = event.target
-    var value = inputDOM.value.replace(/\D/g, ''); // Remove caracteres não numéricos
-    if (value.length > 11) {
-        value = value.substring(0, 11); // Limita a 11 dígitos
-    }
-    if (value.length > 9) {
-        value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4'); // Aplica a máscara
-    } else if (value.length > 6) {
-        value = value.replace(/(\d{3})(\d{3})(\d{3})/, '$1.$2.$3'); // Aplica a máscara parcial
-    } else if (value.length > 3) {
-        value = value.replace(/(\d{3})(\d{3})/, '$1.$2'); // Aplica a máscara parcial
-    }
-    inputDOM.value = value;
-}
-const maskTelefone = (event) => {
-    const inputDOM = event.target;
-    const value = inputDOM.value.replace(/\D/g, ''); // Remove não dígitos
-    if (value.length > 0) {
-        const match = value.match(/^(\d{2})(\d{4,5})(\d{0,4})$/);
-        inputDOM.value = match ? `(${match[1]}) ${match[2]} - ${match[3]}` : value;
-    } else {
-        inputDOM.value = '';
-    }
 }
 
 const init = () => {

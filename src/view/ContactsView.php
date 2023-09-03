@@ -12,8 +12,11 @@
                     <li role="record" class="flex justify-between gap-x-6 p-3 hover:bg-gray-100 cursor-pointer rounded-md">
                         <div class="flex min-w-0 gap-x-4">
                             <div class="min-w-0 flex-auto">
-                                <p class="text-md font-semibold leading-6 text-gray-900"><?= $contact->getType() ?></p>
-                                <p class="mt-1 truncate text-sm leading-5 text-gray-500"></p><?= $contact->getDescription() ?></p>
+                               <div class="flex gap-1">
+                                    <p class="text-md font-semibold leading-6 text-gray-900"><?= $contact->getType(true) ?></p>
+                                    <p class="truncate text-sm leading-5 text-gray-500"></p><?= $contact->getDescription() ?></p>
+                                </div>
+                                <span class="text-xs bg-gradient-to-br from-indigo-400 to-indigo-900 p-1 text-white rounded-md"><?= $contact->getPerson()->getName() ?></span>
                             </div>
                         </div>
                         <div role="record_actions" class="flex gap-5">
@@ -37,36 +40,9 @@
         <?php endif ?>
     </main>
 </section>
-
-
 <?php $this->start('scripts') ?>
-<script>
-    // Array.from(document.querySelectorAll('[role="record_actions"] a:nth-child(3)')).map(btnDel => {
-    //     btnDel.addEventListener('click', e => {
-    //         e.preventDefault()
-    //         swal({
-    //             title: 'Excluir a pessoa selecionada?',
-    //             icon: 'warning',
-    //             dangerMode: true,
-    //             buttons: {
-    //                 yes: {
-    //                     value: true,
-    //                     text: "Sim, Remover",
-    //                     className: "bg-gradient-to-br from-red-500 to-red-600",
-    //                 },
-    //                 cancel: {
-    //                     value:false,
-    //                     visible: true,
-    //                     text: 'Não, cancelar',
-    //                 }
-    //             }
-    //         }).then((remove) => {
-    //             if (remove) {
-    //                 window.location.href = btnDel.getAttribute('href');
-    //             }
-    //             swal.close()
-    //         });
-    //     })
-    // })
-</script>
+    <script src="../../src/view/scripts/Utils.js"></script>
+    <script>
+        addListenerDeleteRecords('Exluir o contato selecionado?')
+    </script>
 <?php $this->end() ?>

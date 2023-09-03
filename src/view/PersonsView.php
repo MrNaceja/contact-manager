@@ -36,36 +36,9 @@
         <?php endif ?>
     </main>
 </section>
-
-
 <?php $this->start('scripts') ?>
-<script>
-    Array.from(document.querySelectorAll('[role="record_actions"] a:nth-child(3)')).map(btnDel => {
-        btnDel.addEventListener('click', e => {
-            e.preventDefault()
-            swal({
-                title: 'Excluir a pessoa selecionada?',
-                icon: 'warning',
-                dangerMode: true,
-                buttons: {
-                    yes: {
-                        value: true,
-                        text: "Sim, Remover",
-                        className: "bg-gradient-to-br from-red-500 to-red-600",
-                    },
-                    cancel: {
-                        value:false,
-                        visible: true,
-                        text: 'Não, cancelar',
-                    }
-                }
-            }).then((remove) => {
-                if (remove) {
-                    window.location.href = btnDel.getAttribute('href');
-                }
-                swal.close()
-            });
-        })
-    })
-</script>
+    <script src="../../src/view/scripts/Utils.js"></script>
+    <script>
+        addListenerDeleteRecords('Exluir a pessoa selecionada?')
+    </script>
 <?php $this->end() ?>
